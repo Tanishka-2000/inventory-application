@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 const FoodCategorySchema = new Schema({
     name: String,
     descripton: String,
-    image:String
+    img:
+    {
+        data: Buffer,
+        contentType: String
+    }
 });
 
 FoodCategorySchema.virtual('url').get(function () {

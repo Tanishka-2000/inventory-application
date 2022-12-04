@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const foodItemController = require('../controllers/foodItemController.js');
+
+router.get('/foodItem/:foodId', foodItemController.getFoodItemById);
+
+router.get('/createFoodItem', foodItemController.getFoodItemForm);
+
+router.post('/createFoodItem', foodItemController.createNewFoodItem);
+
+router.get('/foodItem/:foodId/update', foodItemController.getUpdateFoodItemForm);
+
+router.post('/foodItem/:foodId/update', foodItemController.updateFoodItem);
+
+router.get('/foodItem/:foodId/delete', foodItemController.getDeleteFoodItemForm);
+
+router.post('/foodItem/:foodId/delete', foodItemController.deleteFoodItem);
 
 module.exports = router;

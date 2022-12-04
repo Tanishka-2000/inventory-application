@@ -8,7 +8,11 @@ const FoodItemSchema = new Schema({
     price: Number,
     stock: Number,
     Nutrition:[String],
-    image:String
+    img:
+    {
+        data: Buffer,
+        contentType: String
+    }
 });
 
 FoodItemSchema.virtual('url').get(function () {
