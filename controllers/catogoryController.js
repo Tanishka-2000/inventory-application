@@ -11,7 +11,7 @@ module.exports = getCategoryById = (req, res) => {
     // render categories page with data
 }
 
-module.exports = getCategoryForm = (req, res) => {
+module.exports = getCreateCategoryForm = (req, res) => {
     //render categoryForm page
 }
 
