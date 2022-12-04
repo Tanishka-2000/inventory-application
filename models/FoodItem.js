@@ -3,16 +3,11 @@ const Schema = mongoose.Schema;
 
 const FoodItemSchema = new Schema({
     name: String,
-    descripton: String,
-    category: {type: Schema.Types.ObjectId, ref: "Book"},
+    description: String,
+    category: {type: Schema.Types.ObjectId, ref: "FoodCategory"},
     price: Number,
     stock: Number,
-    Nutrition:[String],
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    }
+    nutrition:[String],
 });
 
 FoodItemSchema.virtual('url').get(function () {

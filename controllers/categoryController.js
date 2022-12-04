@@ -12,24 +12,50 @@
 // var upload = multer({ storage: storage });
 
 const FoodCategory = require('../models/Category.js');
+const FoodItem = require('../models/foodItem.js');
+const async = require('async');
 
-exports.getCategories = (req, res) => {
+exports.getCategories = (req, res, next) => {
     // get all categories using mongoose
     FoodCategory.find({}, function(err, docs){
         if(err) {
             return next(err);
         }else{
             // render categories page with data
+            FoodItem.find({},(err, food) => {console.log(food)})
             res.render('index', {categories: docs});
         }
     });
 };
 
-exports.getCategoryById = (req, res) => {
-    // console.log(req.params.catId);
+exports.getCategoryById = (req, res, next) => {
     // get category by req.params.id
     // get all foodItems with category id as specified in req.params.id
-    // render categories page with data
+    async.parallel({
+        category(callback){
+            FoodCategory.findById(req.params.catId, callback);
+        },
+        foodItems(callback){
+            FoodItem.find({category: req.params.catId}, '_id name description', callback);
+        },
+    },
+    (err, results) => {
+        if (err) {
+          // Error in API usage.
+          return next(err);
+        }
+        if (results.category == null) {
+          // No results.
+          const err = new Error("Food Category not found");
+          err.status = 404;
+          return next(err);
+        }
+        // render categories page with data
+        res.render('category',{
+            category: results.category,
+            foodItems: results.foodItems,
+        });
+    });
 };
 
 exports.getCreateCategoryForm = (req, res) => {
