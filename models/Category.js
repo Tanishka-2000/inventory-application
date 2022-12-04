@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const FoodCategorySchema = new Schema({
     name: String,
-    descripton: String,
+    description: String,
 });
 
 FoodCategorySchema.virtual('url').get(function () {

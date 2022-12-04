@@ -18,10 +18,22 @@
             <h1 class="heading">Food Categories</h1>
 
             <div class="grid-container">
-                <div class="item-card">
-                    <!-- <div class="image"> -->
+                <% categories.forEach(category => { %>
+                    <div class="item-card">
+                        <!-- <div class="image"> -->
+                            <img src="/images/fruit.jpg" alt="Fruit">
+                        <!-- </div> -->
+                        <div class="info">
+                            <h1><%= category.name %></h1>
+                            <p><%= category.description %></p>
+                        </div>
+                        <a href=<%= category.url%>>View Category</a>
+                    </div>
+                <% }) %>
+                <!-- <div class="item-card">
+                    <div class="image">
                         <img src="fruit.jpg" alt="Fruit">
-                    <!-- </div> -->
+                    </div>
                     <div class="info">
                         <h1>Fruit</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -67,7 +79,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
                     </div>
                     <a href="#">View Category</a>
-                </div>
+                </div> -->
             </div>
     </body>
 </html>

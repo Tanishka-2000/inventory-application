@@ -16,15 +16,17 @@ const FoodCategory = require('../models/Category.js');
 exports.getCategories = (req, res) => {
     // get all categories using mongoose
     FoodCategory.find({}, function(err, docs){
-        // if(err) console.log(err);
-        // else
-        console.log(docs);
-        res.render('index',{title:'express'});
+        if(err) {
+            return next(err);
+        }else{
+            // render categories page with data
+            res.render('index', {categories: docs});
+        }
     });
-    // render categories page with data
 };
 
 exports.getCategoryById = (req, res) => {
+    // console.log(req.params.catId);
     // get category by req.params.id
     // get all foodItems with category id as specified in req.params.id
     // render categories page with data
