@@ -14,6 +14,8 @@
 const FoodCategory = require('../models/Category.js');
 const FoodItem = require('../models/foodItem.js');
 const async = require('async');
+const {body, validationResult} = require('express-validator');
+
 
 exports.getCategories = (req, res, next) => {
     // get all categories using mongoose
@@ -22,7 +24,6 @@ exports.getCategories = (req, res, next) => {
             return next(err);
         }else{
             // render categories page with data
-            FoodItem.find({},(err, food) => {console.log(food)})
             res.render('index', {categories: docs});
         }
     });
@@ -63,10 +64,34 @@ exports.getCreateCategoryForm = (req, res) => {
     res.render('createCategoryForm');
 };
 
-exports.createCategory = (req, res) => {
-    //create new category object and save it to database
-    //redirect to /categories route
-};
+exports.createCategory = (req, res) =>{
+    //create new category object
+    const category = new FoodCategory({
+        name: req.body.name,
+        description: req.body.descp,
+    });
+
+    // check for errors
+    const error = category.validateSync();
+    if(error){
+        // if error, render form with error messages
+        res.render('createCategoryForm',{
+            category:category,
+            errors:error.errors,
+        });
+        return;
+    }
+    // if no errors, save data to database
+    category.save(err => {
+        if(err) {
+            return next(err);
+        }
+         //redirect to /categories route
+        res.redirect('/categories');
+    })
+}
+
+
 
 exports.getUpdateCategoryForm = (req, res) => {
     //get category by id as specified in req.param.id
