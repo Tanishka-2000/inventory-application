@@ -119,3 +119,17 @@ a{
     background-color: white;
     color: black;
 }
+button{
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 40px;
+    font-size: 24px;
+    color: #aaa;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
+button:hover{
+    background-color: white;
+    color: black
+}

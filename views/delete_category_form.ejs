@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Category</title>
+        <link rel="stylesheet" href="/stylesheets/index.css">
+    </head>
+    <body>
+        <nav>
+            <h2>Inventory App</h2>
+            <div class="">
+                <a href="/categories/createCategory">Create new Category</a>
+                <a href="/foodditems/createFoodItem">Create new Food Item</a>
+            </div>
+        </nav>
+        <h1 class="heading">Delete Food Category</h1>
+        <div class="itemDetail">
+            <img src="/images/fruit.jpg" alt="">
+            <div class="detail">
+                <h1>Name : <%= category.name %></h1>
+                <p class='descp'><%= category.description %></p>
+
+                <% if(foodItems.length > 0){ %>
+                    <p>Delete the following Food Items before attempting to delete this Food Category.</p>
+
+                <% }else{ %>
+                    <p>Are you sure, you want to delete this Food Category.</p>
+                    <form class="" action="" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                <% } %>
+
+            </div>
+        </div>
+
+        <% if(foodItems.length > 0){ %>
+            <div class="grid-container">
+                <% foodItems.forEach(foodItem => { %>
+                    <div class="item-card">
+                        <img src="/images/fruit.jpg" alt="Fruit">
+                        <div class="info">
+                            <h1><%= foodItem.name %></h1>
+                            <p><%= foodItem.description %></p>
+                        </div>
+                        <a href= <%= foodItem.url %>>View Food Item</a>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </body>
+</html>

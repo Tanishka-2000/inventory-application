@@ -12,7 +12,7 @@
 // var upload = multer({ storage: storage });
 
 const FoodCategory = require('../models/Category.js');
-const FoodItem = require('../models/foodItem.js');
+const FoodItem = require('../models/FoodItem.js');
 const async = require('async');
 const {body, validationResult} = require('express-validator');
 
@@ -53,6 +53,7 @@ exports.getCategoryById = (req, res, next) => {
         }
         // render categories page with data
         res.render('category',{
+            title:'Category Detail',
             category: results.category,
             foodItems: results.foodItems,
         });
@@ -138,10 +139,65 @@ exports.updateCategory = (req, res) => {
 exports.getDeleteCategoryForm = (req, res) => {
     //get category data by id
     //get all foodItems by category id
-    // render deleteForm page with data
+    async.parallel({
+        category(callback){
+            FoodCategory.findById(req.params.catId, callback);
+        },
+        foodItems(callback){
+            FoodItem.find({category: req.params.catId}, '_id name description', callback);
+        },
+    },
+    (err, results) => {
+        if (err) {
+          // Error in API usage.
+          return next(err);
+        }
+        if (results.category == null) {
+          // No results.
+          res.redirect('/categories');
+        }
+        // render deleteForm page with data
+        res.render('delete_category_form',{
+            category: results.category,
+            foodItems: results.foodItems,
+        });
+    });
 };
 
 exports.deleteCategory = (req, res) => {
-    //delete category from database
-    // redirect to /categories route
+    async.parallel({
+        category(callback){
+            FoodCategory.findById(req.params.catId, callback);
+        },
+        foodItems(callback){
+            FoodItem.find({category: req.params.catId}, '_id name description', callback);
+        },
+    },
+    (err, results) => {
+        if (err) {
+          // Error in API usage.
+          return next(err);
+        }
+        if (results.category == null) {
+          // No results.
+          res.redirect('/categories');
+        }
+        // if there are food items under this category
+        if(results.foodItems.length > 0){
+            // render deleteForm page with data
+            res.render('delete_category_form',{
+                category: results.category,
+                foodItems: results.foodItems,
+            });
+            return;
+        }
+        //delete category from database
+        FoodCategory.findByIdAndRemove(req.params.catId,(err) => {
+          if (err) {
+            return next(err);
+          }
+          // Success - redirect to /categories route
+          res.redirect("/categories");
+        });
+    });
 };

@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const FoodItemSchema = new Schema({
-    name: String,
-    description: String,
+    name: {type:String, required:true},
+    description: {type:String, required:true},
     category: {type: Schema.Types.ObjectId, ref: "FoodCategory"},
-    price: Number,
-    stock: Number,
+    price: {type:Number, required:true},
+    stock: {type:Number, required:true},
     nutrition:[String],
 });
 
