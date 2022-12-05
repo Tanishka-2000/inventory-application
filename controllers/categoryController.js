@@ -61,7 +61,7 @@ exports.getCategoryById = (req, res, next) => {
 
 exports.getCreateCategoryForm = (req, res) => {
     //render categoryForm page
-    res.render('createCategoryForm');
+    res.render('categoryForm');
 };
 
 exports.createCategory = (req, res) =>{
@@ -91,16 +91,48 @@ exports.createCategory = (req, res) =>{
     })
 }
 
-
-
-exports.getUpdateCategoryForm = (req, res) => {
+exports.getUpdateCategoryForm = (req, res, next) => {
     //get category by id as specified in req.param.id
-    //render categoryForm and populate fields with data found in category
+    FoodCategory.findById(req.params.catId, function(err, category){
+        if(err) return next(err);
+        if(category === null){
+            const err = new Error("Category not found");
+            err.status = 404;
+            return next(err);
+        }
+        //render categoryForm and populate fields with data found in category
+        res.render('categoryForm',{
+            category:category,
+        });
+    });
 };
 
 exports.updateCategory = (req, res) => {
-    //update category object and save it to database
-    //redirect to /categories/category/id route
+    //update category object
+    const category = new FoodCategory({
+        name: req.body.name,
+        description: req.body.descp,
+        _id: req.params.catId,
+    });
+
+    // check for errors
+    const error = category.validateSync();
+    if(error){
+        // if error, render form with error messages
+        res.render('createCategoryForm',{
+            category:category,
+            errors:error.errors,
+        });
+        return;
+    }
+    // if no errors, update data to database
+    FoodCategory.findByIdAndUpdate(req.params.catId, category, {}, (err, updatedCategory) => {
+      if (err) {
+        return next(err);
+      }
+      // Successful: redirect to /categories/category/id route
+      res.redirect(updatedCategory.url);
+    });
 };
 
 exports.getDeleteCategoryForm = (req, res) => {

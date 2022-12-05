@@ -11,7 +11,7 @@ const FoodItemSchema = new Schema({
 });
 
 FoodItemSchema.virtual('url').get(function () {
-    return `foodItems/foodItem/${this._id}`;
+    return `/foodItems/foodItem/${this._id}`;
 });
 
 module.exports = mongoose.model('FoodItem', FoodItemSchema);

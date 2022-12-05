@@ -15,7 +15,7 @@ const FoodCategorySchema = new Schema({
 });
 
 FoodCategorySchema.virtual('url').get(function () {
-    return `categories/category/${this._id}`;
+    return `/categories/category/${this._id}`;
 });
 
 module.exports = mongoose.model('FoodCategory', FoodCategorySchema);
