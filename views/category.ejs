@@ -7,8 +7,8 @@
                 <p>Total Food Item under this category : <%= foodItems.length %></p>
                 <p class='descp'><%= category.description %></p>
                 <div class="btn-group">
-                    <a href=<%= `${category.url}/update` %>>Update Category</a>
-                    <a href=<%= `${category.url}/delete` %>>Delete Category</a>
+                    <a class='btn' href=<%= `${category.url}/update` %>>Update Category</a>
+                    <a class='btn' href=<%= `${category.url}/delete` %>>Delete Category</a>
                 </div>
                 <div class="delete-message">
                     <% if(title == 'deleteForm'){ %>
@@ -36,7 +36,7 @@
                         <h1><%= foodItem.name %></h1>
                         <p><%= foodItem.description %></p>
                     </div>
-                    <a href= <%= foodItem.url %>>View Food Item</a>
+                    <a class='btn' href= <%= foodItem.url %>>View Food Item</a>
                 </div>
             <% }) %>
         <!--    <div class="item-card">

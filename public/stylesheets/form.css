@@ -74,7 +74,7 @@ select{
     justify-content: space-between;
     align-items: center;
 }
-a{
+.btn{
     color: #aaa;
     text-decoration: none;
     margin: 10px;
@@ -82,7 +82,7 @@ a{
     border: 1px solid white;
     border-radius: 8px;
 }
- a:hover, a:focus{
+ .btn:hover, .btn:focus{
     background-color: white;
     color: black;
 }
