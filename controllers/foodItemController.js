@@ -1,3 +1,4 @@
+const FoodCategory = require('../models/Category.js');
 const FoodItem = require('../models/FoodItem.js');
 
 exports.getFoodItemById = (req, res, next) => {
@@ -21,14 +22,50 @@ exports.getFoodItemById = (req, res, next) => {
     });
 }
 
-exports.getCretaeFoodItemForm = (req, res) => {
-    //render FoodItemForm page
-    res.render('foodItemForm');
+exports.getCretaeFoodItemForm = (req, res, next) => {
+    // get all category to send to formHeader
+    FoodCategory.find({},'name _id', function(err, categories){
+        if(err) return next(err);
+        //render FoodItemForm page
+        res.render('foodItemForm',{
+            foodItem:null,
+            categories,
+            selected:null
+        });
+    });
 }
 
 exports.createNewFoodItem = (req, res) => {
-    //create new foodItem object and save it to database
-    //redirect to /categories/category/id route
+    //create new foodItem object
+    const foodItem = new FoodItem({
+        name: req.body.name,
+        description: req.body.descp ,
+        category: req.body.category,
+        price: req.body.price,
+        stock: req.body.stock,
+    })
+    // check for errors
+    const error = foodItem.validateSync();
+    if(error){
+        // if error, render form with error messages
+        console.log(error.errors);
+        FoodCategory.find({},'name _id',function(err, categories){
+            if(err) return next(err);
+            //render FoodItemForm page
+            res.render('foodItemForm',{
+                foodItem:null,
+                categories,
+                selected:req.body.category
+            });
+        });
+        return;
+    }
+    // if no error then save to database
+    foodItem.save(err => {
+        if(err) return next(err);
+        //redirect to /categories/category/id route
+        res.redirect(foodItem.url);
+    })
 }
 
 exports.getUpdateFoodItemForm = (req, res) => {
