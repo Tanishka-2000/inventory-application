@@ -60,6 +60,7 @@ exports.getCategoryById = (req, res, next) => {
 
 exports.getCreateCategoryForm = (req, res) => {
     //render categoryForm page
+    res.render('createCategoryForm');
 };
 
 exports.createCategory = (req, res) => {

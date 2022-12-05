@@ -1,0 +1,85 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-image: url('../images/background.jpg');
+    background-attachment : fixed;
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    min-height: 100vh;
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Category Form */
+h1{
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 400px;
+    font-size: 34px;
+    color: #fff;
+    margin: 30px;
+    margin-top: 10px;
+    padding: 30px;
+    border-radius: 20px;
+}
+form{
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 28px;
+    width: 950px;
+    border-radius: 20px;
+    padding: 20px 100px;
+    border: 1px solid #aaa;
+    color: #aaa;
+}
+.form-group{
+    position: relative;
+    padding: 50px 0 20px;
+}
+label{
+    position: absolute;
+    top:20px;
+    left: 0px;
+}
+
+input, select{
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    outline: none;
+    width: 100%;
+    color: #aaa;
+}
+input:focus,
+input:focus + label{
+    color: #fff;
+}
+input#image{
+    width: 50%;
+    border-bottom: none;
+}
+select{
+    width: 100%;
+}
+
+button{
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 40px;
+    font-size: 24px;
+    color: #aaa;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
+button:hover{
+    background-color: white;
+    color: black
+}
