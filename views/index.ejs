@@ -1,83 +1,19 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Inventory Management</title>
-        <link rel="stylesheet" href="/stylesheets/index.css">
-    </head>
-    <body>
-        <nav>
-            <h2>Inventory App</h2>
-            <div class="">
-                <a href="/categories/createCategory">Create new Category</a>
-                <a href="/foodditems/createFoodItem">Create new Food Item</a>
-            </div>
+<%- include('partials/mainHeader') %>
+    <p class="top-center">Manage your pantry efficiently with our inventory app and its easy to use features</p>
+    <h1 class="heading">Food Categories</h1>
 
-        </nav>
-            <p class="top-center">Manage your pantry efficiently with our inventory app and its easy to use features</p>
-            <h1 class="heading">Food Categories</h1>
-
-            <div class="grid-container">
-                <% categories.forEach(category => { %>
-                    <div class="item-card">
-                        <img src="/images/fruit.jpg" alt="Fruit">
-                        <div class="info">
-                            <h1><%= category.name %></h1>
-                            <p><%= category.description %></p>
-                        </div>
-                        <a href=<%= category.url%>>View Category</a>
-                    </div>
-                <% }) %>
-                <!-- <div class="item-card">
-                    <div class="image">
-                        <img src="fruit.jpg" alt="Fruit">
-                    </div>
-                    <div class="info">
-                        <h1>Fruit</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                    <a href="#">View Category</a>
+    <div class="grid-container">
+        <% categories.forEach(category => { %>
+            <div class="item-card">
+                <img src="/images/fruit.jpg" alt="Fruit">
+                <div class="info">
+                    <h1><%= category.name %></h1>
+                    <p><%= category.description %></p>
                 </div>
-                <div class="item-card">
-                    <div class="image">
-                        <img src="fruit.jpg" alt="Fruit">
-                    </div>
-                    <div class="info">
-                        <h1>Fruit</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                    <a href="#">View Category</a>
-                </div>
-                <div class="item-card">
-                    <div class="image">
-                        <img src="fruit.jpg" alt="Fruit">
-                    </div>
-                    <div class="info">
-                        <h1>Fruit</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                    </div>
-                    <a href="#">View Category</a>
-                </div>
-                <div class="item-card">
-                    <div class="image">
-                        <img src="fruit.jpg" alt="Fruit">
-                    </div>
-                    <div class="info">
-                        <h1>Fruit</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                    <a href="#">View Category</a>
-                </div>
-                <div class="item-card">
-                    <div class="image">
-                        <img src="fruit.jpg" alt="Fruit">
-                    </div>
-                    <div class="info">
-                        <h1>Fruit</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
-                    </div>
-                    <a href="#">View Category</a>
-                </div> -->
+                <a href=<%= category.url%>>View Category</a>
             </div>
-    </body>
+        <% }) %>
+    </div>
+
+</body>
 </html>

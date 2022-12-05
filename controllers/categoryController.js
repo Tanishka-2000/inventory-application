@@ -11,10 +11,10 @@
 //
 // var upload = multer({ storage: storage });
 
+
 const FoodCategory = require('../models/Category.js');
 const FoodItem = require('../models/FoodItem.js');
 const async = require('async');
-const {body, validationResult} = require('express-validator');
 
 
 exports.getCategories = (req, res, next) => {

@@ -1,0 +1,48 @@
+<%- include('partials/formHeader')%>
+    <body>
+        <h1>Create new Food Item</h1>
+        <form class="" action="index.html" method="post">
+            <div class="form-group">
+                <input type="text" name="foodItemName" id="foodItemName">
+                <label for="foodItemName">Name</label>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="description" id="description">
+                <label for="description">Description</label>
+            </div>
+
+            <div class="form-group">
+                <select name="foodCategory" id="foodCategory">
+                  <option value="categoryid">Fruit</option>
+                  <option value="categoryid">Vegetable</option>
+                  <option value="categoryid">Protien</option>
+                  <option value="categoryid">Dairy</option>
+                </select>
+                <label for="foodCategory">Choose a Category</label>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="nutritions" id="nutritions">
+                <label for="foodItemNutrition">Add Nutritions</label>
+            </div>
+
+            <div class="form-group">
+                <input type="number" name="price" id="price">
+                <label for="price">Price</label>
+            </div>
+
+            <div class="form-group">
+                <input type="number" name="stock" id="stock">
+                <label for="stock">Food Items in Stock</label>
+            </div>
+
+            <div class="form-group">
+                <input type="file" name="image" id="image">
+                <label for="imagee">Upload Image</label>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
