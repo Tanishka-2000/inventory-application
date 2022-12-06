@@ -1,0 +1,18 @@
+<%- include('partials/mainHeader') %>
+
+    <div class="itemDetail">
+        <img src="/images/board.jpg" alt="">
+        <div class="detail">
+            <h1>Name : <%= foodItem.name %></h1>
+            <p>Category : <%= foodItem.category.name %></p>
+            <p>Price : <%= foodItem.price %></p>
+            <p>Number in Stock: <%= foodItem.stock %></p>
+            <p class="descp"><%= foodItem.description %></p>
+            <p>Are you sure, you want to delete this food Item.</p>
+            <form class="" action="" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

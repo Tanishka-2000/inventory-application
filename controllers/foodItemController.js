@@ -131,10 +131,43 @@ exports.updateFoodItem = (req, res) => {
 
 exports.getDeleteFoodItemForm = (req, res) => {
     //get foodItem data by id
-    // render deleteForm page with data
+    FoodItem.findById(req.params.foodId)
+    .populate('category')
+    .exec((err, foodItem) => {
+        if(err){
+            return next(err);
+        }
+        if(foodItem === null){
+            // No results.
+            const err = new Error("Food Item not found");
+            err.status = 404;
+            return next(err);
+        }
+        // render deleteForm page with data
+        res.render('delete_foodItem_form',{
+            foodItem
+        });
+    });
 }
 
 exports.deleteFoodItem = (req, res) => {
-    // delete foodItem from database
-    // redirect to /categories/category/id route
+    // Find food Item by id
+    FoodItem.findById(req.params.foodId, (err, foodItem) => {
+        if(err){
+            return next(err);
+        }
+        if(foodItem === null){
+            // No results.
+            const err = new Error("Food Item not found");
+            err.status = 404;
+            return next(err);
+        }
+
+        // delete foodItem from database
+        FoodItem.findByIdAndRemove(req.params.foodId, err => {
+            if(err) return next(err);
+            // redirect to /categories route
+            res.redirect('/categories')
+        });        
+    });
 }
