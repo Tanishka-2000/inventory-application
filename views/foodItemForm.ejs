@@ -15,7 +15,7 @@
         <div class="form-group">
             <select name="category" id="foodCategory"  required='true'>
                 <% categories.forEach(category => { %>
-                    <option value="<%= category._id %>" selected="<%= category._id === selected ? 'selected': false %>"><%= category.name%></option>
+                    <option value="<%= category._id %>" <%= category._id.toString() === selected.toString() ? 'selected':'' %>><%= category.name%></option>
                 <% }) %>
             </select>
             <label for="category">Choose a Category</label>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group">
-            <input type="number" name="stock" id="stock" value="<%= foodItem ? foodItem.price : '' %>" required='true'>
+            <input type="number" name="stock" id="stock" value="<%= foodItem ? foodItem.stock : '' %>" required='true'>
             <label for="stock">Food Items in Stock</label>
         </div>
 
