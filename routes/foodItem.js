@@ -5,7 +5,7 @@ const foodItemController = require('../controllers/foodItemController.js');
 
 router.get('/foodItem/:foodId', foodItemController.getFoodItemById);
 
-router.get('/createFoodItem', foodItemController.getCretaeFoodItemForm);
+router.get('/createFoodItem', foodItemController.getCreateFoodItemForm);
 
 router.post('/createFoodItem', foodItemController.createNewFoodItem);
 

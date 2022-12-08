@@ -7,7 +7,7 @@ const FoodItemSchema = new Schema({
     category: {type: Schema.Types.ObjectId, ref: "FoodCategory"},
     price: {type:Number, required:true},
     stock: {type:Number, required:true},
-    nutrition:[String],
+    img:String
 });
 
 FoodItemSchema.virtual('url').get(function () {

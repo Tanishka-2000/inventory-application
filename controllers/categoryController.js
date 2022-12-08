@@ -27,7 +27,7 @@ exports.getCategoryById = (req, res, next) => {
         },
         foodItems(callback){
             // get all foodItems with category id as specified in req.params.id
-            FoodItem.find({category: req.params.catId}, '_id name description', callback);
+            FoodItem.find({category: req.params.catId}, '_id name description img', callback);
         },
     },
     (err, results) => {
@@ -102,42 +102,44 @@ exports.getUpdateCategoryForm = (req, res, next) => {
     });
 };
 
-exports.updateCategory = [upload.single('image'),
-(req, res) => {
-    //update category object
+exports.updateCategory = [
+    upload.single('image'),
+    (req, res) => {
+        //update category object
 
-    const category = new FoodCategory({
-        name: req.body.name,
-        description: req.body.descp,
-        img: req.file ? req.file.filename: req.body.hiddenImage,
-        _id: req.params.catId,
-    });
-
-    // check for errors
-    const error = category.validateSync();
-    if(error){
-        // if error, render form with error messages
-        res.render('createCategoryForm',{
-            category:category,
-            errors:error.errors,
+        const category = new FoodCategory({
+            name: req.body.name,
+            description: req.body.descp,
+            img: req.file ? req.file.filename: req.body.hiddenImage,
+            _id: req.params.catId,
         });
-        return;
+
+        // check for errors
+        const error = category.validateSync();
+        if(error){
+            // if error, render form with error messages
+            res.render('createCategoryForm',{
+                category:category,
+                errors:error.errors,
+            });
+            return;
+        }
+        // if no errors, update data to database
+        FoodCategory.findByIdAndUpdate(req.params.catId, category, {}, (err, updatedCategory) => {
+          if (err) {
+            return next(err);
+          }
+          // remove old image if new image is provided
+          if(req.file){
+              fs.unlink('./public/data/uploads/'+req.body.hiddenImage, () => {
+                  console.log('image deleted');
+              });
+          }
+          // Successful: redirect to /categories/category/id route
+          res.redirect(updatedCategory.url);
+        });
     }
-    // if no errors, update data to database
-    FoodCategory.findByIdAndUpdate(req.params.catId, category, {}, (err, updatedCategory) => {
-      if (err) {
-        return next(err);
-      }
-      // remove old image if new image is provided
-      if(req.file){
-          fs.unlink('./public/data/uploads/'+req.body.hiddenImage, () => {
-              console.log('image deleted');
-          });
-      }
-      // Successful: redirect to /categories/category/id route
-      res.redirect(updatedCategory.url);
-    });
-}];
+];
 
 exports.getDeleteCategoryForm = (req, res) => {
     //get category data by id

@@ -1,7 +1,7 @@
 <%- include('partials/mainHeader') %>
 
     <div class="itemDetail">
-        <img src="/images/board.jpg" alt="">
+        <img src=<%= foodItem.img ? `/data/uploads/${foodItem.img}` : "/images/fruit.jpg"%> alt="foodItem">
         <div class="detail">
             <h1>Name : <%= foodItem.name %></h1>
             <p>Category : <%= foodItem.category.name %></p>

@@ -19,7 +19,6 @@
                             <form class="" action="" method="post">
                                 <button type="submit" name="button">Delete</button>
                             </form>
-
                         <% } %>
                     <% } %>
                 </div>
@@ -31,7 +30,7 @@
         <div class="grid-container">
             <% foodItems.forEach(foodItem => { %>
                 <div class="item-card">
-                    <img src="/images/fruit.jpg" alt="Fruit">
+                    <img src=<%= foodItem.img ? `/data/uploads/${foodItem.img}` : "/images/fruit.jpg"%> alt="foodItem">
                     <div class="info">
                         <h1><%= foodItem.name %></h1>
                         <p><%= foodItem.description %></p>
