@@ -12,6 +12,7 @@ const FoodCategorySchema = new Schema({
         required: [true,'Category description must be specified'],
         minLength:[2, 'description must be at least 2 letters long']
     },
+    img:String
 });
 
 FoodCategorySchema.virtual('url').get(function () {

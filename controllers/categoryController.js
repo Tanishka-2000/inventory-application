@@ -10,7 +10,8 @@
 // });
 //
 // var upload = multer({ storage: storage });
-
+const multer  = require('multer');
+const upload = multer({ dest: './public/data/uploads/'});
 
 const FoodCategory = require('../models/Category.js');
 const FoodItem = require('../models/FoodItem.js');
@@ -65,11 +66,13 @@ exports.getCreateCategoryForm = (req, res) => {
     res.render('categoryForm',{category:null});
 };
 
-exports.createCategory = (req, res) =>{
-    //create new category object
+exports.createCategory = [ upload.single('image'),
+(req, res) =>{
+
     const category = new FoodCategory({
         name: req.body.name,
         description: req.body.descp,
+        img: req.file.filename
     });
 
     // check for errors
@@ -90,7 +93,7 @@ exports.createCategory = (req, res) =>{
          //redirect to /categories route
         res.redirect('/categories');
     })
-}
+}]
 
 exports.getUpdateCategoryForm = (req, res, next) => {
     //get category by id as specified in req.param.id
