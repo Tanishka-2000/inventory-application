@@ -1,7 +1,7 @@
 <%- include('partials/mainHeader') %>
         <h1 class="heading">Delete Food Category</h1>
         <div class="itemDetail">
-            <img src="/images/fruit.jpg" alt="">
+            <img src= <%=`/data/uploads/${category.img}`%> alt="">
             <div class="detail">
                 <h1>Name : <%= category.name %></h1>
                 <p class='descp'><%= category.description %></p>

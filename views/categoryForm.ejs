@@ -12,6 +12,7 @@
 
             </div>
             <div class="form-group">
+                <input type="hidden" name="hiddenImage" value= <%= category ? category.img ? category.img : '':'' %>>
                 <input type="file" name="image" id="image">
                 <label for="image">Category Image</label>
 

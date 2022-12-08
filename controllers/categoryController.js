@@ -1,17 +1,6 @@
-// var multer = require('multer');
-//
-// var storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// });
-//
-// var upload = multer({ storage: storage });
 const multer  = require('multer');
 const upload = multer({ dest: './public/data/uploads/'});
+const fs = require('fs');
 
 const FoodCategory = require('../models/Category.js');
 const FoodItem = require('../models/FoodItem.js');
@@ -31,13 +20,13 @@ exports.getCategories = (req, res, next) => {
 };
 
 exports.getCategoryById = (req, res, next) => {
-    // get category by req.params.id
-    // get all foodItems with category id as specified in req.params.id
     async.parallel({
         category(callback){
+            // get category by req.params.id
             FoodCategory.findById(req.params.catId, callback);
         },
         foodItems(callback){
+            // get all foodItems with category id as specified in req.params.id
             FoodItem.find({category: req.params.catId}, '_id name description', callback);
         },
     },
@@ -66,34 +55,36 @@ exports.getCreateCategoryForm = (req, res) => {
     res.render('categoryForm',{category:null});
 };
 
-exports.createCategory = [ upload.single('image'),
-(req, res) =>{
+exports.createCategory = [
+    upload.single('image'),
+    (req, res) => {
 
-    const category = new FoodCategory({
-        name: req.body.name,
-        description: req.body.descp,
-        img: req.file.filename
-    });
-
-    // check for errors
-    const error = category.validateSync();
-    if(error){
-        // if error, render form with error messages
-        res.render('createCategoryForm',{
-            category:category,
-            errors:error.errors,
+        const category = new FoodCategory({
+            name: req.body.name,
+            description: req.body.descp,
+            img: req.file ? req.file.filename : '',
         });
-        return;
-    }
-    // if no errors, save data to database
-    category.save(err => {
-        if(err) {
-            return next(err);
+
+        // check for errors
+        const error = category.validateSync();
+        if(error){
+            // if error, render form with error messages
+            res.render('createCategoryForm',{
+                category:category,
+                errors:error.errors,
+            });
+            return;
         }
-         //redirect to /categories route
-        res.redirect('/categories');
-    })
-}]
+        // if no errors, save data to database
+        category.save(err => {
+            if(err) {
+                return next(err);
+            }
+             //redirect to /categories route
+            res.redirect('/categories');
+        });
+    }
+];
 
 exports.getUpdateCategoryForm = (req, res, next) => {
     //get category by id as specified in req.param.id
@@ -111,11 +102,14 @@ exports.getUpdateCategoryForm = (req, res, next) => {
     });
 };
 
-exports.updateCategory = (req, res) => {
+exports.updateCategory = [upload.single('image'),
+(req, res) => {
     //update category object
+
     const category = new FoodCategory({
         name: req.body.name,
         description: req.body.descp,
+        img: req.file ? req.file.filename: req.body.hiddenImage,
         _id: req.params.catId,
     });
 
@@ -134,10 +128,16 @@ exports.updateCategory = (req, res) => {
       if (err) {
         return next(err);
       }
+      // remove old image if new image is provided
+      if(req.file){
+          fs.unlink('./public/data/uploads/'+req.body.hiddenImage, () => {
+              console.log('image deleted');
+          });
+      }
       // Successful: redirect to /categories/category/id route
       res.redirect(updatedCategory.url);
     });
-};
+}];
 
 exports.getDeleteCategoryForm = (req, res) => {
     //get category data by id
@@ -194,6 +194,10 @@ exports.deleteCategory = (req, res) => {
             });
             return;
         }
+        // remove image
+        fs.unlink('./public/data/uploads/'+ results.category.img, () => {
+            console.log('image deleted');
+        });
         //delete category from database
         FoodCategory.findByIdAndRemove(req.params.catId,(err) => {
           if (err) {
