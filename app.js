@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
+const compression = require('compression');
+const helmet = require('helmet');
+
 const indexRouter = require('./routes/index');
 const categoryRouter = require('./routes/categories');
 const foodItemRouter = require('./routes/foodItem');
@@ -17,6 +20,9 @@ mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology:true});
 const db = mongoose.connection;
 db.on('error',console.error.bind(console, 'Mongodb connection error'));
 
+// setting for production
+app.use(compression());
+app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
