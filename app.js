@@ -14,8 +14,7 @@ const foodItemRouter = require('./routes/foodItem');
 
 var app = express();
 
-const dev_db_url = "mongodb+srv://tanishka:tanishka@grocery-data.6xyzltp.mongodb.net/pantry?retryWrites=true&w=majority";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology:true});
 const db = mongoose.connection;
 db.on('error',console.error.bind(console, 'Mongodb connection error'));
